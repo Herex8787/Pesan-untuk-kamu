@@ -49,6 +49,7 @@ position:relative;
 z-index:10;
 box-shadow:0 0 20px rgba(0,0,0,.2);
 transition:.4s;
+overflow:hidden;
 }
 
 .goyang{
@@ -81,13 +82,17 @@ transform:scale(1.03);
 }
 
 #pilihan{
+
 height:260px;
 position:relative;
 
 display:flex;
 flex-direction:column;
 align-items:center;
+
 gap:10px;
+overflow:hidden;
+
 }
 
 .kabur{
@@ -113,6 +118,21 @@ position:absolute;
 pointer-events:none;
 }
 
+.fade{
+animation:fade .8s;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(15px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
 </style>
 
 </head>
@@ -120,7 +140,7 @@ pointer-events:none;
 
 <div id="bintang"></div>
 
-<div class="box" id="box">
+<div class="box fade" id="box">
 
 <h2>Ada sesuatu buat kamu ✨</h2>
 
@@ -244,6 +264,8 @@ let s=soal[no];
 
 box.innerHTML=`
 
+<div class="fade">
+
 <h3>
 Pertanyaan ${no+1}
 </h3>
@@ -257,6 +279,8 @@ ${s.t}
 <br>
 
 <div id="pilihan"></div>
+
+</div>
 
 `;
 
@@ -308,46 +332,66 @@ return;
 
 if(no==3){
 
-if(kabur<5){
+if(kabur<3){
 
 let posisi=[
 
-{x:0,y:0},
-{x:200,y:0},
-{x:0,y:180},
-{x:200,y:180},
-{x:100,y:90}
+{x:20,y:20},
+{x:180,y:40},
+{x:60,y:170}
 
 ];
 
 let p=posisi[kabur];
 
+el.style.position="absolute";
+
 el.style.left=p.x+"px";
 el.style.top=p.y+"px";
 
-el.style.transform=
-`rotate(${Math.random()*40}deg)
-scale(.8)`;
-
 kabur++;
 
-if(kabur==5){
+if(kabur==3){
+
+setTimeout(()=>{
 
 pilihan.innerHTML=`
 
-<button onclick="salah()">
+<div style="
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
+margin-top:20px;
+">
+
+<button style="
+width:85%;
+"
+onclick="salah()">
 8
 </button>
 
-<button onclick="lanjut()">
+<button style="
+width:85%;
+"
+onclick="lanjut()">
 8
 </button>
 
-<button onclick="salah()">
+<button style="
+width:85%;
+"
+onclick="salah()">
 8
 </button>
+
+</div>
 
 `;
+
+},300);
 
 }
 
@@ -385,6 +429,8 @@ function akhir(){
 
 box.innerHTML=`
 
+<div class="fade">
+
 <h2>
 🎉 Terima Kasih 🎉
 </h2>
@@ -406,6 +452,8 @@ Silahkan pencet tombol selanjutnya 🌸
 <button onclick="loadingPesan()">
 Selanjutnya
 </button>
+
+</div>
 
 `;
 
@@ -447,11 +495,15 @@ function pesanAkhir(){
 
 box.innerHTML=`
 
+<div class="fade">
+
 <h2 id="typing"></h2>
 
 <br>
 
 <div id="waButton"></div>
+
+</div>
 
 `;
 
@@ -496,7 +548,7 @@ Chat WhatsApp 💌
 function wa(){
 
 window.location.href=
-"https://wa.me/6285137772160";
+"https://wa.me/6285137772160?text=Halo%20✨%20Aku%20sudah%20menyelesaikan%20semua%20pertanyaannya%20🌸";
 
 }
 
